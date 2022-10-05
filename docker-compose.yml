@@ -72,24 +72,24 @@ services:
     labels:
       org.label-schema.group: "monitoring"
 
-  # cadvisor:
-  #   image: gcr.io/google-containers/cadvisor:latest
-  #   container_name: cadvisor
-  #   volumes:
-  #     - /:/rootfs:ro
-  #     - /var/run:/var/run:rw
-  #     - /sys:/sys:ro
-  #     # - /var/lib/docker:/var/lib/docker:ro
-  #     # - /cgroup:/cgroup:ro
-  #   restart: unless-stopped
-  #   expose:
-  #     - 8080
-  #   ports:
-  #     - "8080:8080"
-  #   networks:
-  #     - monitor-net
-  #   labels:
-  #     org.label-schema.group: "monitoring"
+  cadvisor:
+    image: gcr.io/google-containers/cadvisor:latest
+    container_name: cadvisor
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /volume1/@docker:/var/lib/docker:ro
+      # - /cgroup:/cgroup:ro
+    restart: unless-stopped
+    expose:
+      - 8080
+    ports:
+      - "8080:8080"
+    networks:
+      - monitor-net
+    labels:
+      org.label-schema.group: "monitoring"
 
   grafana:
     image: grafana/grafana:latest
