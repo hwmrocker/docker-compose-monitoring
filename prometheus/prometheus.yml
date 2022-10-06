@@ -42,7 +42,7 @@ scrape_configs:
     authorization:
       credentials: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJiOGNjMTA4NzU1NDU0ZTYxOWRiODFmZWQ0ZTA2M2E4MiIsImlhdCI6MTY2NTA2Nzk0MywiZXhwIjoxOTgwNDI3OTQzfQ.aGy09YdkC3nUX4j56tnuLhwCsAQko5FbPn0pFiJ5f8w"
 
-    scheme: https
+    scheme: http
     static_configs:
       - targets: ["192.168.178.75:8123"]
 
