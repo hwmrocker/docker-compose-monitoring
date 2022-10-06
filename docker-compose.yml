@@ -110,19 +110,18 @@ services:
       - monitor-net
     labels:
       org.label-schema.group: "monitoring"
-  # pushgateway:
-  #   image: prom/pushgateway:latest
-  #   container_name: pushgateway
-  #   restart: unless-stopped
-  #   expose:
-  #     - 9091
-  #   ports:
-  #     - "9091:9091"
-  #   networks:
-  #     - monitor-net
-  #   labels:
-  #     org.label-schema.group: "monitoring"
-
+  pushgateway:
+    image: prom/pushgateway:latest
+    container_name: pushgateway
+    restart: unless-stopped
+    expose:
+      - 9091
+    ports:
+      - "9091:9091"
+    networks:
+      - monitor-net
+    labels:
+      org.label-schema.group: "monitoring"
   # caddy:
   #   image: stefanprodan/caddy:latest
   #   container_name: caddy
