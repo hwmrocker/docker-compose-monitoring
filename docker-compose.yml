@@ -15,6 +15,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.prometheus.rule=( Host(`prometheus.hwm.lan`) || Host(`prom.hwm.lan`) )"
+      - "org.label-schema.group=monitoring"
 
     container_name: prometheus
     volumes:
@@ -34,8 +35,6 @@ services:
       - "9090:9090"
     networks:
       - lan
-    labels:
-      org.label-schema.group: "monitoring"
 
   # have a look at https://github.com/a1fred/alertmanager-telegram/blob/main/alertmanager.yml
   # alertmanager:
