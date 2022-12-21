@@ -1,8 +1,8 @@
 version: '3'
 
 networks:
-  monitor-net:
-    driver: bridge
+  lan:
+    external: true
 
 volumes:
   prometheus_data: {}
@@ -12,6 +12,10 @@ services:
 
   prometheus:
     image: prom/prometheus:latest
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.prometheus.rule=( Host(`prometheus.hwm.lan`) || Host(`prom.hwm.lan`) )"
+
     container_name: prometheus
     volumes:
       - ./prometheus:/etc/prometheus
@@ -29,7 +33,7 @@ services:
     ports:
       - "9090:9090"
     networks:
-      - monitor-net
+      - lan
     labels:
       org.label-schema.group: "monitoring"
 
@@ -46,7 +50,7 @@ services:
   #   expose:
   #     - 9093
   #   networks:
-  #     - monitor-net
+  #     - lan
   #   labels:
   #     org.label-schema.group: "monitoring"
 
@@ -68,7 +72,7 @@ services:
     ports:
       - "9100:9100"
     networks:
-      - monitor-net
+      - lan
     labels:
       org.label-schema.group: "monitoring"
 
@@ -87,7 +91,7 @@ services:
     ports:
       - "8080:8080"
     networks:
-      - monitor-net
+      - lan
     labels:
       org.label-schema.group: "monitoring"
 
@@ -107,9 +111,12 @@ services:
     ports:
       - "3000:3000"
     networks:
-      - monitor-net
+      - lan
     labels:
-      org.label-schema.group: "monitoring"
+      - "org.label-schema.group=monitoring"
+      - "traefik.enable=true"
+      - "traefik.http.routers.grafana.rule=Host(`grafana.hwm.lan`)"
+
   pushgateway:
     image: prom/pushgateway:latest
     container_name: pushgateway
@@ -119,7 +126,7 @@ services:
     ports:
       - "9091:9091"
     networks:
-      - monitor-net
+      - lan
     labels:
       org.label-schema.group: "monitoring"
   # caddy:
@@ -137,6 +144,6 @@ services:
   #     - ADMIN_PASSWORD=${ADMIN_PASSWORD}
   #   restart: unless-stopped
   #   networks:
-  #     - monitor-net
+  #     - lan
   #   labels:
   #     org.label-schema.group: "monitoring"
